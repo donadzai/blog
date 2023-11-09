@@ -1,13 +1,13 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-const Handlebars = require('handlebars');
+// const Handlebars = require('handlebars');
 const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const port = 3000;
-const {
-    allowInsecurePrototypeAccess,
-} = require('@handlebars/allow-prototype-access');
+// const {
+//     allowInsecurePrototypeAccess,
+// } = require('@handlebars/allow-prototype-access');
 
 const route = require('./routes');
 const db = require('./config/db');
@@ -25,14 +25,14 @@ app.use(
 app.use(express.json()); // xử lý middleware giữa submit form và server.
 
 //HTTP logger
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 ///Template engine
 app.engine(
     '.hbs',
     handlebars.engine({
         extname: '.hbs',
-        handlebars: allowInsecurePrototypeAccess(Handlebars),
+        // handlebars: allowInsecurePrototypeAccess(Handlebars),
     }),
 );
 app.set('view engine', '.hbs');

@@ -4,7 +4,7 @@ class SiteController {
     // [GET] /
     async index(req, res, next) {
         try {
-            const courses = await Course.find({});
+            const courses = await Course.find({}).lean();
             res.render('home', { courses });
         } catch (error) {
             next(error);
