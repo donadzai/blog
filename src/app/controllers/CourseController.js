@@ -10,6 +10,16 @@ class CourseController {
             next(error);
         }
     }
+
+    create(req, res, next) {
+        res.render('courses/create');
+    }
+
+    async save(req, res, next) {
+        const course = new Course(req.body);
+        await course.save();
+        res.redirect('/');
+    }
 }
 
 module.exports = new CourseController();
