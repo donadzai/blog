@@ -1,0 +1,33 @@
+<table class='table'>
+    <thead>
+        <tr>
+            <th scope='col'>#</th>
+            <th scope='col'>Tên khóa học</th>
+            <th scope='col'>Mô tả khóa học</th>
+            <th scope='col'>URL hình ảnh</th>
+            <th scope='col'>Video ID</th>
+            <th scope='col'>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each courses}}
+            <tr>
+                <th scope='row'>{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.image}}</td>
+                <td>{{this.videoId}}</td>
+                <td>
+                    <a href='/courses/{{this.slug}}/edit'><button
+                            type='button'
+                            class='btn btn-outline-info'
+                        >Sửa</button></a>
+                    <button
+                        type='button'
+                        class='btn btn-outline-danger mt-4'
+                    >Xóa</button>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

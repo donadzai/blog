@@ -11,8 +11,17 @@ class CourseController {
         }
     }
 
+    // [GET] /courses/create
+
     create(req, res, next) {
         res.render('courses/create');
+    }
+
+    // [GET] /courses/:slug/edit
+
+    async edit(req, res, next) {
+        const course = await Course.findOne({ slug: req.params.slug }).lean();
+        res.render('courses/edit', { course });
     }
 
     async save(req, res, next) {

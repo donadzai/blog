@@ -32,6 +32,11 @@ app.engine(
     '.hbs',
     handlebars.engine({
         extname: '.hbs',
+        helpers: {
+            sum(a, b) {
+                return a + b;
+            },
+        },
         // handlebars: allowInsecurePrototypeAccess(Handlebars),
     }),
 );
