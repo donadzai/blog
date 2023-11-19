@@ -5,6 +5,7 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const port = 3000;
+const methodOverride = require('method-override');
 // const {
 //     allowInsecurePrototypeAccess,
 // } = require('@handlebars/allow-prototype-access');
@@ -23,6 +24,9 @@ app.use(
     }),
 ); // xử lý middleware giữa submit form và server.
 app.use(express.json()); // xử lý middleware giữa submit form và server.
+
+//Override
+app.use(methodOverride('_method'));
 
 //HTTP logger
 // app.use(morgan('combined'));

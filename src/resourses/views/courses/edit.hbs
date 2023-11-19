@@ -1,6 +1,6 @@
 <div class='mt-4'>
     <h2>Chỉnh sửa khóa học</h2>
-    <form method='post' action='/courses/save'>
+    <form method='post' action='/courses/{{course.slug}}/edited?_method=PUT'>
         <div class='form-group'>
             <label for='name'>Tên khóa học</label>
             <input
@@ -41,6 +41,6 @@
                 id='videoId'
             />
         </div>
-        <button type='submit' class='btn btn-primary'>Thêm khóa học</button>
+        <button type='submit' class='btn btn-primary'>Lưu khóa học</button>
     </form>
 </div>

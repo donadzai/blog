@@ -29,6 +29,13 @@ class CourseController {
         await course.save();
         res.redirect('/');
     }
+
+    // [Put] /courses/:slug/edited
+
+    async edited(req, res, next) {
+        await Course.updateOne({ slug: req.params.slug }, req.body);
+        res.redirect('/me/stored/courses');
+    }
 }
 
 module.exports = new CourseController();
