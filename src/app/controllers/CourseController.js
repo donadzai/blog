@@ -36,6 +36,11 @@ class CourseController {
         await Course.updateOne({ slug: req.params.slug }, req.body);
         res.redirect('/me/stored/courses');
     }
+
+    async delete(req, res, next) {
+        await Course.deleteOne({ slug: req.params.slug });
+        res.redirect('/me/stored/courses');
+    }
 }
 
 module.exports = new CourseController();
