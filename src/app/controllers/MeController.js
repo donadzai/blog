@@ -10,6 +10,15 @@ class MeController {
             next(error);
         }
     }
+
+    async trashCourses(req, res, next) {
+        try {
+            const courses = await Course.findWithDeleted({ deleted: true }).lean();
+            res.render('me/myTrashCourses', { courses });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new MeController();

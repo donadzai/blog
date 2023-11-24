@@ -1,0 +1,71 @@
+<div>
+    <h3>Khoá học đã xóa</h3>
+    <a href='/me/stored/courses'>Quay lại danh sách khóa học</a>
+</div>
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th scope='col'>#</th>
+            <th scope='col'>Tên khóa học</th>
+            <th scope='col'>Mô tả khóa học</th>
+            <th scope='col'>URL hình ảnh</th>
+            <th scope='col'>Video ID</th>
+            <th scope='col'>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each courses}}
+                <tr>
+                    <th scope='row'>{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.image}}</td>
+                    <td>{{this.videoId}}</td>
+                    <td>
+                        <button
+                                id="{{this.slug}}"
+                                type='button'
+                                class='btn btn-outline-info'
+                            >
+                                Khôi phục
+                        </button>
+                        <button
+                                type='button'
+                                class='btn btn-outline-danger mt-4'
+                                data-bs-toggle='modal'
+                                data-bs-target='#forceCourse'
+                                data-bs-whatever="{{this.slug}}"
+                            >
+                                Xóa vĩnh viễn
+                        </button>
+                    </td>
+                </tr>
+            {{else}}
+            <tr>
+                <th class='text-center' colspan='6'>Thùng rác trống.
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<form id="form-restore" method="post"></form>
+
+{{! modal xác nhân xóa }}
+<div class='modal fade' id='forceCourse' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h1 class='modal-title fs-5' id='exampleModalLabel'>Bạn có chắc chắn muốn xóa vĩnh viễn khóa học này</h1>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                    <form id='form-submit-force' method='post'><button type='button' class='btn btn-primary'>Xóa vĩnh viễn</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src='/myCourses.js'></script>

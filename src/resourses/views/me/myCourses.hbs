@@ -1,3 +1,8 @@
+<div>
+    <h3>Khoá học của tôi</h3>
+    <a href='/me/trash/courses'>Thùng rác</a>
+</div>
+
 <table class='table'>
     <thead>
         <tr>
@@ -31,53 +36,32 @@
                     >Xóa</button>
                 </td>
             </tr>
+        {{else}}
+
+            <tr>
+                <th class='text-center' colspan='6'>Bạn chưa đăng khóa học nào.
+                    <a href='/courses/create'>Đăng khóa học ngay</a></th>
+            </tr>
+
         {{/each}}
     </tbody>
 </table>
 
 {{! modal xác nhân xóa }}
-<div
-    class='modal fade'
-    id='deleteModal'
-    tabindex='-1'
-    aria-labelledby='exampleModalLabel'
-    aria-hidden='true'
->
+<div class='modal fade' id='deleteModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class='modal-header'>
-                <h1 class='modal-title fs-5' id='exampleModalLabel'>Bạn có chắc chắn
-                    muốn xóa khóa học này</h1>
-                <button
-                    type='button'
-                    class='btn-close'
-                    data-bs-dismiss='modal'
-                    aria-label='Close'
-                ></button>
+                <h1 class='modal-title fs-5' id='exampleModalLabel'>Bạn có chắc chắn muốn xóa khóa học này</h1>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
             </div>
             <div class='modal-footer'>
-                <button
-                    type='button'
-                    class='btn btn-secondary'
-                    data-bs-dismiss='modal'
-                >Close</button>
-                <form id='form-submit-delete' method='post'><button
-                        type='button'
-                        class='btn btn-primary'
-                    >Xóa</button>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                <form id='form-submit-delete' method='post'><button type='button' class='btn btn-primary'>Xóa</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    const deleteModal = document.getElementById('deleteModal'); if (deleteModal) {
-    deleteModal.addEventListener('show.bs.modal', event => { const button =
-    event.relatedTarget; const slugCourse = button.getAttribute('data-bs-whatever');
-    const formSubmitDelete = document.querySelector('#form-submit-delete');
-    console.log(formSubmitDelete); formSubmitDelete.action =
-    `/courses/${slugCourse}/delete?_method=DELETE`; const deleteBtn =
-    document.querySelector('.btn.btn-primary'); deleteBtn.addEventListener("click",
-    () => { formSubmitDelete.submit(); }); }) }
-</script>
+<script src='/myCourses.js'></script>

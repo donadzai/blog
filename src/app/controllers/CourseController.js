@@ -37,9 +37,20 @@ class CourseController {
         res.redirect('/me/stored/courses');
     }
 
+    // [Patch] /courses/:slug/restore
+    async restore(req, res, next) {
+        await Course.restore({ slug: req.params.slug });
+        res.redirect('back');
+    }
+
     async delete(req, res, next) {
-        await Course.deleteOne({ slug: req.params.slug });
+        await Course.delete({ slug: req.params.slug });
         res.redirect('/me/stored/courses');
+    }
+
+    async force(req, res, next) {
+        await Course.deleteOne({ slug: req.params.slug });
+        res.redirect('back');
     }
 }
 
