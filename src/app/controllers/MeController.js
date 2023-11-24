@@ -5,7 +5,8 @@ class MeController {
     async storedCourses(req, res, next) {
         try {
             const courses = await Course.find({}).lean();
-            res.render('me/myCourses', { courses });
+            const coursesDelete = await Course.countDocumentsWithDeleted({ deleted: true }).lean();
+            res.render('me/myCourses', { courses, coursesDelete });
         } catch (error) {
             next(error);
         }
