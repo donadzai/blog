@@ -1,51 +1,72 @@
-<div>
-    <h3>Khoá học của tôi</h3>
-    <a href='/me/trash/courses'>Thùng rác({{coursesDelete}})</a>
-</div>
+<form id='form-stored-courses' method='post' action='/courses/handle-form-action'>
+    <div>
+        <h3>Khoá học của tôi</h3>
+        <a href='/me/trash/courses'>Thùng rác({{coursesDelete}})</a>
+    </div>
 
-<table class='table'>
-    <thead>
-        <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>Tên khóa học</th>
-            <th scope='col'>Mô tả khóa học</th>
-            <th scope='col'>URL hình ảnh</th>
-            <th scope='col'>Video ID</th>
-            <th scope='col'>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each courses}}
+    <div class='d-flex align-items-center'>
+        <div class='form-check flex-shrink-0'>
+            <input class='form-check-input' type='checkbox' id='checkboxAllCourses' />
+            <label class='form-check-label' for='checkboxAllCourses'>
+                Chọn tất cả
+            </label>
+        </div>
+
+        <select id='select-action-stored' name='actions' class='form-select mx-4 w-25'>
+            <option value=''>--Chọn hành động--</option>
+            <option value='delete'>Xóa</option>
+        </select>
+
+        <button id='submit-form-stored-courses' type='button' class='btn btn-success flex-shrink-0 disabled'>Thực hiện</button>
+    </div>
+
+    <table class='table'>
+        <thead>
             <tr>
-                <th scope='row'>{{sum @index 1}}</th>
-                <td>{{this.name}}</td>
-                <td>{{this.description}}</td>
-                <td>{{this.image}}</td>
-                <td>{{this.videoId}}</td>
-                <td>
-                    <a href='/courses/{{this.slug}}/edit'><button
+                <th scope='col' colspan='2'>#</th>
+                <th scope='col'>Tên khóa học</th>
+                <th scope='col'>Mô tả khóa học</th>
+                <th scope='col'>URL hình ảnh</th>
+                <th scope='col'>Video ID</th>
+                <th scope='col'>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each courses}}
+                <tr>
+                    <th scope='row'>{{sum @index 1}}</th>
+                    <td>
+                        <input class='form-check-input' type='checkbox' value='{{this.slug}}' name='courseSlugs' />
+                    </td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.image}}</td>
+                    <td>{{this.videoId}}</td>
+                    <td>
+                        <a href='/courses/{{this.slug}}/edit'><button
+                                type='button'
+                                class='btn btn-outline-info'
+                            >Sửa</button></a>
+                        <button
                             type='button'
-                            class='btn btn-outline-info'
-                        >Sửa</button></a>
-                    <button
-                        type='button'
-                        class='btn btn-outline-danger mt-4'
-                        data-bs-toggle='modal'
-                        data-bs-target='#deleteModal'
-                        data-bs-whatever='{{this.slug}}'
-                    >Xóa</button>
-                </td>
-            </tr>
-        {{else}}
+                            class='btn btn-outline-danger mt-4'
+                            data-bs-toggle='modal'
+                            data-bs-target='#deleteModal'
+                            data-bs-whatever='{{this.slug}}'
+                        >Xóa</button>
+                    </td>
+                </tr>
+            {{else}}
 
-            <tr>
-                <th class='text-center' colspan='6'>Bạn chưa đăng khóa học nào.
-                    <a href='/courses/create'>Đăng khóa học ngay</a></th>
-            </tr>
+                <tr>
+                    <th class='text-center' colspan='7'>Bạn chưa đăng khóa học nào.
+                        <a href='/courses/create'>Đăng khóa học ngay</a></th>
+                </tr>
 
-        {{/each}}
-    </tbody>
-</table>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
 
 {{! modal xác nhân xóa }}
 <div class='modal fade' id='deleteModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>

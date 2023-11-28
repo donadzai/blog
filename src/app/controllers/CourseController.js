@@ -52,6 +52,26 @@ class CourseController {
         await Course.deleteOne({ slug: req.params.slug });
         res.redirect('back');
     }
+
+    // [Post] /courses/handle-form-action
+    async handleFormAction(req, res, next) {
+        switch (req.body.actions) {
+            case 'delete':
+                await Course.delete({ slug: { $in: req.body.courseSlugs } });
+                res.redirect('back');
+                break;
+            case 'restore':
+                await Course.restore({ slug: { $in: req.body.courseSlugs } });
+                res.redirect('back');
+                break;
+            case 'force':
+                await Course.deleteOne({ slug: { $in: req.body.courseSlugs } });
+                res.redirect('back');
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 module.exports = new CourseController();

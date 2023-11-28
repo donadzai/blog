@@ -36,3 +36,70 @@ if (forceModel) {
         });
     });
 }
+
+//Checkbox all courses
+const checkboxAllCoursesElement = document.querySelector('#checkboxAllCourses');
+const checkboxCourseChildren = document.querySelectorAll("input[name='courseSlugs']");
+const formStoredCoursesElement = document.querySelector('#form-stored-courses');
+const submitFormStoredCoursesBtn = document.querySelector('#submit-form-stored-courses');
+const selectActionElement = document.querySelector('#select-action-stored');
+let quantityChecked = 0;
+checkboxAllCoursesElement.onchange = () => {
+    const isCheckedAll = checkboxAllCoursesElement.checked;
+
+    if (isCheckedAll) {
+        quantityChecked = checkboxCourseChildren.length;
+    } else {
+        quantityChecked = 0;
+    }
+
+    removeClass();
+
+    for (let i = 0; i < checkboxCourseChildren.length; i++) {
+        const checkboxChild = checkboxCourseChildren[i];
+        checkboxChild.checked = isCheckedAll;
+    }
+};
+
+// lặp đống checkbox khóa học
+for (let i = 0; i < checkboxCourseChildren.length; i++) {
+    const checkboxChild = checkboxCourseChildren[i];
+    checkboxChild.onchange = () => {
+        const isChecked = checkboxChild.checked;
+
+        if (isChecked) {
+            quantityChecked = ++quantityChecked;
+        } else {
+            quantityChecked = --quantityChecked;
+        }
+
+        removeClass();
+
+        if (quantityChecked === checkboxCourseChildren.length) {
+            checkboxAllCoursesElement.checked = true;
+        } else {
+            checkboxAllCoursesElement.checked = false;
+        }
+    };
+}
+
+submitFormStoredCoursesBtn.onclick = () => {
+    formStoredCoursesElement.submit();
+};
+
+selectActionElement.onchange = () => {
+    removeClass();
+};
+
+const removeClass = () => {
+    if (selectActionElement.value == '') {
+        isChoice = false;
+    } else {
+        isChoice = true;
+    }
+    if (quantityChecked > 0 && isChoice) {
+        submitFormStoredCoursesBtn.classList.remove('disabled');
+    } else {
+        submitFormStoredCoursesBtn.classList.add('disabled');
+    }
+};

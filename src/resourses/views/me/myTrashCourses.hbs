@@ -1,53 +1,75 @@
-<div>
-    <h3>Khoá học đã xóa</h3>
-    <a href='/me/stored/courses'>Quay lại danh sách khóa học</a>
-</div>
+<form id='form-stored-courses' method='post' action='/courses/handle-form-action'>
+    <div>
+        <h3>Khoá học đã xóa</h3>
+        <a href='/me/stored/courses'>Quay lại danh sách khóa học</a>
+    </div>
 
-<table class='table'>
-    <thead>
-        <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>Tên khóa học</th>
-            <th scope='col'>Mô tả khóa học</th>
-            <th scope='col'>URL hình ảnh</th>
-            <th scope='col'>Video ID</th>
-            <th scope='col'>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each courses}}
-                <tr>
-                    <th scope='row'>{{sum @index 1}}</th>
-                    <td>{{this.name}}</td>
-                    <td>{{this.description}}</td>
-                    <td>{{this.image}}</td>
-                    <td>{{this.videoId}}</td>
-                    <td>
-                        <button
-                                id="{{this.slug}}"
-                                type='button'
-                                class='btn btn-outline-info'
-                            >
-                                Khôi phục
-                        </button>
-                        <button
-                                type='button'
-                                class='btn btn-outline-danger mt-4'
-                                data-bs-toggle='modal'
-                                data-bs-target='#forceCourse'
-                                data-bs-whatever="{{this.slug}}"
-                            >
-                                Xóa vĩnh viễn
-                        </button>
-                    </td>
-                </tr>
-            {{else}}
+    <div class='d-flex align-items-center'>
+        <div class='form-check flex-shrink-0'>
+            <input class='form-check-input' type='checkbox' id='checkboxAllCourses' />
+            <label class='form-check-label' for='checkboxAllCourses'>
+                Chọn tất cả
+            </label>
+        </div>
+
+        <select id='select-action-stored' name='actions' class='form-select mx-4 w-25'>
+            <option value=''>--Chọn hành động--</option>
+            <option value='restore'>Khôi phục</option>
+            <option value='force'>Xóa vĩnh viễn</option>
+        </select>
+
+        <button id='submit-form-stored-courses' type='button' class='btn btn-success flex-shrink-0 disabled'>Thực hiện</button>
+    </div>
+    
+    <table class='table'>
+        <thead>
             <tr>
-                <th class='text-center' colspan='6'>Thùng rác trống.
+                <th scope='col' colspan='2'>#</th>
+                <th scope='col'>Tên khóa học</th>
+                <th scope='col'>Mô tả khóa học</th>
+                <th scope='col'>URL hình ảnh</th>
+                <th scope='col'>Video ID</th>
+                <th scope='col'>Hành động</th>
             </tr>
-        {{/each}}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {{#each courses}}
+                    <tr>
+                        <td>
+                            <input class='form-check-input' type='checkbox' value='{{this.slug}}' name='courseSlugs' />
+                        </td>
+                        <th scope='row'>{{sum @index 1}}</th>
+                        <td>{{this.name}}</td>
+                        <td>{{this.description}}</td>
+                        <td>{{this.image}}</td>
+                        <td>{{this.videoId}}</td>
+                        <td>
+                            <button
+                                    id="{{this.slug}}"
+                                    type='button'
+                                    class='btn btn-outline-info'
+                                >
+                                    Khôi phục
+                            </button>
+                            <button
+                                    type='button'
+                                    class='btn btn-outline-danger mt-4'
+                                    data-bs-toggle='modal'
+                                    data-bs-target='#forceCourse'
+                                    data-bs-whatever="{{this.slug}}"
+                                >
+                                    Xóa vĩnh viễn
+                            </button>
+                        </td>
+                    </tr>
+                {{else}}
+                <tr>
+                    <th class='text-center' colspan='6'>Thùng rác trống.
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
 
 <form id="form-restore" method="post"></form>
 
