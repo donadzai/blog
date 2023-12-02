@@ -5,6 +5,7 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const port = 3000;
+const displaySortIcon = require('./app/midleware/displaySortIcon');
 const methodOverride = require('method-override');
 // const {
 //     allowInsecurePrototypeAccess,
@@ -12,6 +13,7 @@ const methodOverride = require('method-override');
 
 const route = require('./routes');
 const db = require('./config/db');
+const { log } = require('console');
 
 // connect to DB
 db.connect();
@@ -32,6 +34,10 @@ app.use(methodOverride('_method'));
 //HTTP logger
 // app.use(morgan('combined'));
 
+// display sort icon by midleware
+
+app.use('/me/stored/', displaySortIcon);
+
 ///Template engine
 app.engine(
     '.hbs',
@@ -40,6 +46,33 @@ app.engine(
         helpers: {
             sum(a, b) {
                 return a + b;
+            },
+            displayIcon(filed, sort) {
+                let iconSort;
+
+                if (filed === sort.column) {
+                    iconSort = sort.action;
+                } else {
+                    iconSort = 'default';
+                }
+
+                const icons = {
+                    default: 'oi oi-elevator',
+                    asc: 'oi oi-sort-ascending',
+                    desc: 'oi oi-sort-descending',
+                };
+
+                const actions = {
+                    default: 'asc',
+                    desc: 'asc',
+                    asc: 'desc',
+                };
+
+                const icon = icons[iconSort];
+                const action = actions[iconSort];
+                return `<a href='?sort=true&column=${filed}&action=${action}'>
+                        <span class='${icon}'></span>
+                    </a>`;
             },
         },
         // handlebars: allowInsecurePrototypeAccess(Handlebars),

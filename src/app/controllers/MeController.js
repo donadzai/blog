@@ -3,8 +3,15 @@ const Course = require('../models/Course');
 class MeController {
     // [GET] /me/stored/courses
     async storedCourses(req, res, next) {
+        let method = Course.find({}).lean();
+        if (req.query.sort) {
+            method = Course.find({})
+                .sort({ [req.query.column]: req.query.action })
+                .lean();
+        }
+
         try {
-            const courses = await Course.find({}).lean();
+            const courses = await method;
             const coursesDelete = await Course.countDocumentsWithDeleted({ deleted: true }).lean();
             res.render('me/myCourses', { courses, coursesDelete });
         } catch (error) {
