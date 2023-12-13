@@ -7,6 +7,7 @@ const app = express();
 const port = 3000;
 const displaySortIcon = require('./app/midleware/displaySortIcon');
 const methodOverride = require('method-override');
+const jwt = require('jsonwebtoken');
 // const {
 //     allowInsecurePrototypeAccess,
 // } = require('@handlebars/allow-prototype-access');
@@ -46,6 +47,10 @@ app.engine(
         helpers: {
             sum(a, b) {
                 return a + b;
+            },
+            displayUserName(token) {
+                const userName = jwt.verify(token, 'mk');
+                return userName.userName;
             },
             displayIcon(filed, sort) {
                 let iconSort;
